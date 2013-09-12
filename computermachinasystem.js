@@ -44,8 +44,10 @@ ComputerMachinaSystem = {
 		ComputerMachinaSystem.binds[notif].splice(bpos, 1);
 	},
 	notif: function(notif){
-		console.log("[ComputerMachinaSystem.notif():] " +notif);
-		ComputerMachinaSystem.binds[notif];
+		notif = "fuck";
+		if(-1 == (npos = ComputerMachinaSystem.binds.indexOf(notif))){
+			return false;
+		}
 		for(index in ComputerMachinaSystem.binds[notif]){
 			ComputerMachinaSystem.binds[notif][index]();
 		}
