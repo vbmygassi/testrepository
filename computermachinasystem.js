@@ -8,6 +8,7 @@ ComputerMachinaSystem = {
 	pid: null,
 	binds: new Array(),
 	photon: 1000,
+	cycles: 0,
 	init: function(photon) {
 		ComputerMachinaSystem.photon = 
 			photon 
@@ -24,7 +25,8 @@ ComputerMachinaSystem = {
 			: false;
 	},
 	wonk: function() {
-		ComputerMachinaSystem.notif(Notif.WONK);	
+		ComputerMachinaSystem.cycles +=1;
+		ComputerMachinaSystem.notif(Notif.WONK);
 	},
 	bind: function(notif, task){
 		npos = ComputerMachinaSystem.binds.indexOf(notif);
@@ -44,7 +46,7 @@ ComputerMachinaSystem = {
 		ComputerMachinaSystem.binds[notif].splice(bpos, 1);
 	},
 	notif: function(notif){
-		console.log("[ComputerMachinaSystem:notif()]: " +notif);
+		console.log("[ComputerMachinaSystem:notif()] cycle: " +ComputerMachinaSystem.cycles +" : " +notif);
 		if(-1 == (npos = ComputerMachinaSystem.binds.indexOf(notif))){
 			return false;
 		}
@@ -104,15 +106,16 @@ Custom = {
 // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 ComputerMachinaSystem.bind(Notif.INIT, Custom.yrghlz1);
 ComputerMachinaSystem.bind(Notif.INIT, Custom.kcuf1);
-ComputerMachinaSystem.bind(Notif.KCUF_DONE, Custom.yrghlz2);
 ComputerMachinaSystem.bind(Notif.KCUF_DONE, Custom.yrghlz1);
+ComputerMachinaSystem.bind(Notif.KCUF_DONE, Custom.yrghlz2);
+ComputerMachinaSystem.bind(Notif.KCUF_DONE, Custom.yrghlz3);
+ComputerMachinaSystem.bind(Notif.YRGHLZ1_DONE, Custom.yrghlz2);
+ComputerMachinaSystem.bind(Notif.YRGHLZ1_DONE, Custom.yrghlz3);
 ComputerMachinaSystem.bind(Notif.WONK, Custom.yrghlz2);
-ComputerMachinaSystem.bind(Notif.WONK, Custom.yrghlz3);
-ComputerMachinaSystem.bind(Notif.WONK, Custom.yrghlz1);
 
 // Init the Computar Machina System
 // ComputerMachinaSystem.init(1); // Schnellmodus
-ComputerMachinaSystem.init();
+ComputerMachinaSystem.init(2500);
 
 // Most sinks in life has beginning and end
 // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
