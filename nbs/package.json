@@ -1,0 +1,15 @@
+{
+	"name": "nix",
+	"description": "the big nothing",
+	"version": "0.0.1",
+	"private": true,
+	"dependencies": {
+		"mustache-express": "0.2.x",
+		"password-generator": "0.2.x",
+		"moment": "2.x"
+	},
+	"engines": {
+		"node": "0.10.x",
+		"npm": "1.x"
+	}
+}

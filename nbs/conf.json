@@ -1,0 +1,9 @@
+{
+	"database": {
+		"debug": false,
+		"user": "viktor",
+		"password": "pass",
+		"hosts": ["127.0.0.1:8091"],
+		"bucket": "default"
+	}
+}
