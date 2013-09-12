@@ -14,7 +14,7 @@ ComputerMachinaSystem = {
 				? photon 
 				: ComputerMachinaSystem.photon;
 		ComputerMachinaSystem.pid 
-			? false 
+			? false	
 			: setInterval(ComputerMachinaSystem.wonk, ComputerMachinaSystem.photon); 
 		ComputerMachinaSystem.notif(Notif.INIT);	
 	},
@@ -44,6 +44,7 @@ ComputerMachinaSystem = {
 		ComputerMachinaSystem.binds[notif].splice(bpos, 1);
 	},
 	notif: function(notif){
+		console.log("[ComputerMachinaSystem:notif()]: " +notif);
 		if(-1 == (npos = ComputerMachinaSystem.binds.indexOf(notif))){
 			return false;
 		}
