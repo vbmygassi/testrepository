@@ -96,11 +96,11 @@ Config = {
 		DEBUG: true,
 		HOSTS: ["localhost:8091"],
 		USER: "viktor",
-		PASSWORD: "Kn3#80r9",
+		PASSWORD: "pass",
 		BUCKET: "default"
 	},
 	DOWNLOAD: {
-		HOST: "ec2-54-216-141-253.eu-west-1.compute.amazonaws.com",
+		HOST: "amazon",
 		PORT: "8092",
 		PATH: "/default/_design/dev_export/_view/all?stale=update_after&connection_timeout=60000&limit=1&skip=0"
 	}
