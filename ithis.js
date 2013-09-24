@@ -1,84 +1,65 @@
-/* :::::::::: ... :::: .... ?? :::: :
-   ::::::::::::::::::::::::::::::::::
-   ::::::::::::::::::::::::::::......
-   :: (die letzten Haare so; "Nein, wir bleiben!"
+/*
+ 
 
-
-   transports documents stored in a Couchbase instance to an Elasticsearch instance? 
-
-					*/
-
-Storage = { 
-	bucket: null,
-	client: null,
-	connect: function(cb)
-	{
-		Couchbase.connect({
-			debug    : Config.DB.DEBUG,
-			user     : Config.DB.USER,
-			password : Config.DB.PASSWORD,
-			hosts    : Config.DB.HOSTS,
-			bucket   : Config.DB.BUCKET
-		},
-		onConnect = function(err, bucket)
-		{
-			if(err){ throw(err); };
-			Storage.bucket = bucket;
-			cb();
-		});
+ indexes all documents of a couchbase instance 
+ "intoto" a given elasticsearch instance
+ (none of the "transport" thingies worked...
+  i decided to download the documents (fthis.js) 
+  and then index the "zu fuss"
+ 
+ it uses a couchbase view:  
+ http://127.0.0.1:8092/default/_design/export/_view/all?connection_timeout=60000&limit=5000&skip=0
+ export : all
+	===
+	function (doc, meta){
+		emit(doc.id, doc);
 	}
-}
 
-Fthis = {
-	main: function()
-	{
-		Elastical = require('elastical');
-		Couchbase = require("couchbase");
-		Storage.client = new Elastical.Client(Config.ELASTIC.HOST, {port: Config.ELASTIC.PORT});
-		Storage.connect(Fthis.transportDocuments);
-	},
-	transportDocuments: function()
-	{
-		console.log("transportDocuments()");
-		Storage.bucket.view(Config.DB.VIEW, Config.DB.EMIT, Config.DB.OPTS, Fthis.indexDocuments);
-	},
-	indexDocuments: function(err, res)
-	{
-		console.log("indexDocuments()");
+                                                     */
+
+
+
+Elastical = require("elastical");
+
+require("request")("http://127.0.0.1:8092/default/_design/export/_view/all?connection_timeout=500&limit=5000&skip=0",
+	function(err, response, body){
 		if(err){
-			console.log(err);
-			return;
+			console.log("err: " +err);
+		} 
+		if(response){
+			console.log("response: " +response);
+		} 
+		if(body){
+			client = new Elastical.Client("127.0.0.1", {port: 9200});
+			res = JSON.parse(body);
+			console.log(res);
+			for(index in res.rows){
+				doc = res.rows[index];
+				console.log("*******************************************");
+				console.log(doc);
+				console.log(index);
+				if(null == doc.id){
+					console.log("no doc id: ");
+					console.log(doc);
+					continue;
+				}
+				doc.value.id = doc.id;
+				client.index("adminsearch", doc._type ? doc._type : "default", doc.value, function(err, result, res){
+					if(err){
+						console.log("err: ");
+						console.log(err);
+					}
+					if(result){
+						console.log("result: ");
+						console.log(result);
+					}
+					if(res){
+						console.log("res: ");
+						console.log(res);
+					}
+				});
+			}
 		}
-		for(index in res){
-			doc = res[index];
-			console.log(doc);
-			doc.value.id = doc.id;
-			Storage.client.index(Config.ELASTIC.INDEX, doc._type ? doc._type : "default", doc.value, Fthis.trace);
-		}
-	},
-	trace: function(err, result, res)
-	{
-		console.log("trace()");
-		err ? console.log(err) : result ? console.log(result) : res ? console.log(res) : false;
 	}
-}
+);
 
-Config = {
-	ELASTIC:{
-		CLIENT: "127.0.0.1",
-		PORT: "9200",
-		INDEX: "search"
-	},
-	DB: {
-		DEBUG: true,
-		HOSTS: ["localhost:8091"],
-		USER: "viktor",
-		PASSWORD: "pass",
-		BUCKET: "default",
-		VIEW: "export",
-		EMIT: "all",
-		OPTS: { stale: "update_after", connection_timeout: 60000, limit: 2000, skip: 0 }
-	}
-}
-
-Fthis.main();

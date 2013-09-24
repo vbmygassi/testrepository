@@ -17,7 +17,8 @@ ComputerMachinaSystem = {
 		ComputerMachinaSystem.pid 
 			? false	
 			: setInterval(ComputerMachinaSystem.wonk, ComputerMachinaSystem.photon); 
-		ComputerMachinaSystem.notif(Notif.INIT);	
+		ComputerMachinaSystem.notif(Notif.INIT);
+		return true;
 	},
 	stop: function() {
 		ComputerMachinaSystem.pid
@@ -27,6 +28,7 @@ ComputerMachinaSystem = {
 	wonk: function() {
 		ComputerMachinaSystem.cycles +=1;
 		ComputerMachinaSystem.notif(Notif.WONK);
+		return true;
 	},
 	bind: function(notif, task){
 		npos = ComputerMachinaSystem.binds.indexOf(notif);
@@ -35,6 +37,7 @@ ComputerMachinaSystem = {
 			ComputerMachinaSystem.binds[notif] = new Array();
 		}
 		ComputerMachinaSystem.binds[notif].push(task);
+		return true;
 	},
 	unbind: function(notif, task){
 		if(-1 == (npos = ComputerMachinaSystem.binds.indexOf(notif))){
@@ -44,15 +47,17 @@ ComputerMachinaSystem = {
 			return false;
 		}
 		ComputerMachinaSystem.binds[notif].splice(bpos, 1);
+		return true;
 	},
 	notif: function(notif){
-		console.log("[ComputerMachinaSystem:notif()] cycle: " +ComputerMachinaSystem.cycles +" : " +notif);
+		console.log("[ComputerMachinaSystem:notif()]: cycle: " +ComputerMachinaSystem.cycles +": " +notif);
 		if(-1 == (npos = ComputerMachinaSystem.binds.indexOf(notif))){
 			return false;
 		}
 		for(index in ComputerMachinaSystem.binds[notif]){
 			ComputerMachinaSystem.binds[notif][index]();
 		}
+		return true;
 	}
 }
 
@@ -81,22 +86,22 @@ Notif = {
 // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 Custom = {
 	yrghlz1: function(){ 
-		Model.value +=1;
+		Model.value = Math.random() *1000;
 		console.log("[Custom.yrghlz1()]: " +Model.value);
 		ComputerMachinaSystem.notif(Notif.YRGHLZ1_DONE); 
 	},
 	yrghlz2: function(){ 
-		Model.value +=100;
+		Model.value = Math.random() *1000;
 		console.log("[Custom.yrghlz2()]: " +Model.value);
 		ComputerMachinaSystem.notif(Notif.YRGHLZ2_DONE); 
 	},
 	yrghlz3: function(){ 
-		Model.value =0;
+		Model.value = Math.random() *1000;
 		console.log("[Custom.yrghlz3()]: " +Model.value);
 		ComputerMachinaSystem.notif(Notif.YRGHLZ3_DONE); 
 	},
 	kcuf1: function(){ 
-		Model.value = -127;
+		Model.value = Math.random() *1000;
 		console.log("[Custom.kcuf1()]: " +Model.value);
 		ComputerMachinaSystem.notif(Notif.KCUF_DONE); 
 	}
@@ -115,7 +120,7 @@ ComputerMachinaSystem.bind(Notif.WONK, Custom.yrghlz2);
 
 // Init the Computar Machina System
 // ComputerMachinaSystem.init(1); // Schnellmodus
-ComputerMachinaSystem.init(2500);
+ComputerMachinaSystem.init(1000);
 
 // Most sinks in life has beginning and end
 // ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

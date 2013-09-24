@@ -1,13 +1,17 @@
-/* :::::::::: ... :::: .... ?? :::: :
-   ::::::::::::::::::::::::::::::::::
-   ::::::::::::::::::::::::::::......
-   :: (die letzten Haare so; "Nein, wir bleiben!"
+/** 
 
+ downloads all documents from a given couchdb instance
+ to a "local" instance... "zu fuss" 
+ since cbbackup and cbrestore did not work (missing ids, missing vbuckets
 
-   downloads documents from an existing storage and stores them local for fun
-	the view: dev_export view all function(){ emit(doc._id, doc) }
+ it uses a couchbase view called 
+ export | all
+ dev_export | all (the non published)
+ function(doc, meta){
+ 	emit(doc.id, doc);
+ }
 
-					*/
+                                  */
 
 Storage = { 
 	bucket: null,
@@ -31,16 +35,16 @@ Storage = {
 }
 
 Fthis = {
+	skip: 0,
 	main: function()
 	{
 		Elastical = require('elastical');
 		Couchbase = require("couchbase");
-		Storage.client = new Elastical.Client(Config.ELASTIC.HOST, {port: Config.ELASTIC.PORT});
-		Storage.connect(Fthis.downloadDocuments);
+		Storage.connect(Fthis.downloadDocument);
 	},
-	downloadDocuments: function()
+	downloadDocument: function()
 	{
-		console.log("downloadDocuments()");
+		console.log("downloadDocument()");
 		http = require("http");
 		options = { host: Config.DOWNLOAD.HOST, port: Config.DOWNLOAD.PORT, path: Config.DOWNLOAD.PATH };
 		request = http.request(options, function(res){
@@ -49,7 +53,7 @@ Fthis = {
 				data +=chunk;
 			});
 			res.on('end', function(){
-				Fthis.insertDocuments(JSON.parse(data));
+				Fthis.insertDocument(JSON.parse(data));
 			});
 		});
 		request.on('error', function (e) {
@@ -57,9 +61,9 @@ Fthis = {
 		});
 		request.end();
 	},
-	insertDocuments: function(res)
+	insertDocument: function(res)
 	{
-		console.log("insertDocuments()");
+		console.log("insertDocument():" +res);
 		if(res.error){
 			console.log(res.error);
 			return;
@@ -69,10 +73,17 @@ Fthis = {
 			for(ii in docs){
 				doc = docs[ii];
 				console.log(doc);
-				Storage.bucket.add({key: doc.id}, doc.value, Fthis.trace);
+				Storage.bucket.add({key: doc.id}, doc.value, Fthis.next);
 			}
 		}
-	}
+	},
+	next: function()
+	{
+		console.log(Fthis.skip);	
+		Fthis.skip += 1;
+		Config.DOWNLOAD.PATH =  "/default/_design/dev_export/_view/all?stale=update_after&connection_timeout=60000&limit=1&skip=" +Fthis.skip;
+		Fthis.downloadDocument();		
+	},
 	trace: function(err, result, res)
 	{
 		console.log("trace()");
@@ -81,25 +92,18 @@ Fthis = {
 }
 
 Config = {
-	ELASTIC:{
-		CLIENT: "127.0.0.1",
-		PORT: "9200",
-		INDEX: "search"
-	},
 	DB: {
 		DEBUG: true,
 		HOSTS: ["localhost:8091"],
 		USER: "viktor",
-		PASSWORD: "pass",
-		BUCKET: "default",
-		VIEW: "dev_export", 
-		EMIT: "all",
-		OPTS: { stale: "update_after", connection_timeout: 60000, limit: 10000, skip: 1 }
+		PASSWORD: "Kn3#80r9",
+		BUCKET: "default"
 	},
 	DOWNLOAD: {
 		HOST: "ec2-54-216-141-253.eu-west-1.compute.amazonaws.com",
 		PORT: "8092",
-		PATH: "/default/_design/dev_export/_view/all?stale=false&connection_timeout=60000&limit=2000&skip=0"
+		PATH: "/default/_design/dev_export/_view/all?stale=update_after&connection_timeout=60000&limit=1&skip=0"
 	}
 }
+
 Fthis.main();

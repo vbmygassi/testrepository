@@ -2,42 +2,7 @@ elastical = require("elastical"),
 nconf = require("nconf");
 nconf.file({file:"basic.json"});
 
-userID = 1001;
-userID = 1015;
-userID = 1022;
-userID =  404;
-userID =  627;
-userID = 1242;
-userID = 1032;
-userID = 1099;
-userID =  958;
-userID =  641;
-userID =  755;
-userID =  878;
-userID =  729;
-userID =  535;
-userID =  819;
-userID =  402;
-userID = 1051;
-userID = 1168;
-userID = 1197;
-userID =  470;
-userID = 1187;
-userID = 1029;
-userID = 1242;
-userID = 1232;
-userID =  505;
-userID = 1103;
-userID =  674;
-userID =  455;
-userID =  874;
-userID =  660;
 userID =  632;
-userID = 1068;
-userID = 1060;
-userID = 1022;
-userID =  579;
-userID =  565;
 
 Computerprogram = {
 	getUserCreds: function() { 
