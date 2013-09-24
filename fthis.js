@@ -6,7 +6,7 @@
 
  it uses a couchbase view called 
  export | all
- dev_export | all (the non published)
+ dev_export | all (the non published view)
  function(doc, meta){
  	emit(doc.id, doc);
  }
