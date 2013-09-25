@@ -1,14 +1,14 @@
 <?php
 /*
 	wild wild wild 	
-		"like" select statements and sql -like search in a given couchdb instance
+		"like" select statements and sql -like search in a given couchbase instance
 		without jetty
 
 				*/
 
-$path_to_my_coutch_db_backup = "/Users/vico/Workspace/MyGassiBackend2/backend/vico/db-backup/loc2.backup/bucket-default/node-127.0.0.1%3A8091/data-0000.cbb";
+$path_to_my_coutchbase_backup = "/Users/vico/Workspace/MyGassiBackend2/backend/vico/db-backup/loc2.backup/bucket-default/node-127.0.0.1%3A8091/data-0000.cbb";
 
-if(!($db = new SQLite3($path_to_my_coutch_db_backup))){
+if(!($db = new SQLite3($path_to_my_coutchbase_backup))){
 	print "no such db\n";
 	return; 
 }
