@@ -16,7 +16,7 @@ if(!($db = new SQLite3($path_to_my_coutch_db_backup))){
 print_r($db);
 
 if(!($q = $db->prepare("select * from cbb_msg"))){
-	print "corrupt execute of statement\n";
+	print "corrupt statement\n";
 	return;
 }
 
