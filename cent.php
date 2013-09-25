@@ -2,7 +2,8 @@
 /*
     a wild wild wild attempt to store price values in their "cent" representation
 	to avoid the "EUR 10.00" + "EUR 10,12" p r o b l e m
-	[ be sure the excel-crew will understand thiss ... ]
+	[ excel-crew will never ever get this straight... ]
+	[ "but no, i need the "10,12" representation, but no, i need the "10.23" repr, my computerprogramm will not work without...
 
 
  						*/
