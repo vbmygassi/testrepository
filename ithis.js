@@ -32,7 +32,7 @@ require("request")("http://127.0.0.1:8092/default/_design/export/_view/all?conne
 		if(null == body){
 			return false;
 		}
-		client = new Elastical.Client("127.0.0.1", {port: 9200});
+		client = new Elastical.Client("127.0.0.1", { port: 9200 });
 		res = JSON.parse(body);
 		for(index in res.rows){
 			doc = res.rows[index];
