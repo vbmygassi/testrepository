@@ -2,7 +2,8 @@
 /*
 	wild wild wild 	
 		"like" select statements and sql -like search in a given couchbase instance
-		without jetty
+
+		yeah: gimme five
 
 				*/
 
@@ -13,8 +14,6 @@ if(!($db = new SQLite3($path_to_my_coutchbase_backup))){
 	exit(10);
 }
 
-print_r($db);
-
 // if(!($q = $db->prepare('select * from cbb_msg'))){
 // if(!($q = $db->prepare('select val from cbb_msg'))){
 // if(!($q = $db->prepare('select * from cbb_msg where val like "%dog%" '))){
@@ -23,15 +22,11 @@ if(!($q = $db->prepare('select cas, val from cbb_msg where val like "%dog%" ')))
 	exit(20);
 }
 
-print_r($q);
-
 if(!($res = $q->execute())){
 	print "no res for query\n";
 	print_r($q);
 	exit(30);
 }
-
-print_r($res);
 
 $i = 0;
 while($row = $res->fetchArray()){
