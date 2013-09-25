@@ -11,13 +11,14 @@ $path_to_my_coutchbase_backup = "/Users/vico/Workspace/MyGassiBackend2/backend/v
 
 if(!($db = new SQLite3($path_to_my_coutchbase_backup))){
 	print "no such db\n";
+	print_r($path_to_my_coutchbase_backup);
 	exit(10);
 }
 
 // if(!($q = $db->prepare('select * from cbb_msg'))){
 // if(!($q = $db->prepare('select val from cbb_msg'))){
 // if(!($q = $db->prepare('select * from cbb_msg where val like "%dog%" '))){
-if(!($q = $db->prepare('select cas, val from cbb_msg where val like "%dog%" '))){
+if(!($q = $db->prepare('select * from cbb_msg where val like "%type%:%dog%" and val like "%birthday%:%11076%"'))){
 	print "corrupt statement\n";
 	exit(20);
 }
@@ -39,4 +40,4 @@ while($row = $res->fetchArray()){
 	$i++;
 }
 
-exit(30);
+exit(40);
