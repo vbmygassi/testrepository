@@ -17,14 +17,14 @@ print_r($db);
 
 if(!($q = $db->prepare("select * from cbb_msg"))){
 	print "corrupt statement\n";
-	return;
+	exit(10);
 }
 
 print_r($q);
 
 if(!($res = $q->execute())){
 	print "no res for query\n";
-	return;
+	exit(20);
 }
 
 print_r($res);
@@ -35,4 +35,4 @@ while($row = $res->fetchArray()){
 	print PHP_EOL;
 }
 
-exit(19);
+exit(30);
