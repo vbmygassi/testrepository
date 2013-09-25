@@ -8,7 +8,6 @@
 
  						*/
 
-
 function centsToPrice($cents, $decim, $curry)
 {
 	$res = 0; 
