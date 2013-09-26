@@ -5,66 +5,49 @@
 
 
  						*/
-
-function centsToPrice($cents, $decim, $curry)
-{
-	$res = "";
-	$temp = str_split($cents);
-	$i = count($temp);
-	switch($i){
-		case 0: array_unshift($temp, 0, 0, 0, 0); break;
-		case 1: array_unshift($temp, 0, 0, 0); break;	
-		case 2: array_unshift($temp, 0, 0); break;
-		case 3: array_unshift($temp, 0); break;
-	}
-	$i = count($temp);
-	$dp = $i -3; 
-	while($i--){
-		if($dp == $i){ $res = $decim . $res; }
-		$res = $temp[$i] . $res;
-	}
-	$res = $res . " " . $curry;	
-	return $res;
+class Fuck
+{ 
+	static $decim = ",";
 	
-	// $res = substr_replace($cents, $decim, strlen($cents) -2, 0);
-	
-	/*
-	$res = 0; 
-	$dollars = $cents /100;
-	$dollars = round($dollars, 2);
-	$price = array("0", "00");
-	$temp = "" +$dollars;
-	if(false !== strpos($temp, ".")){
-		$kaki = explode(".", $temp);
-		$price[0] = $kaki[0];
-		if(strlen($kaki[1]) == 1){
-			$price[1] = $kaki[1] . "0";
+	public static function centsToCentsAOneHundredTimesRepr($cents)
+	{
+		// hätte *fast* geklappt	
+		// return substr_replace($cents, self::$decim, strlen($cents) -2, 0);
+		
+		$cents = round($cents, 0);
+		$res = "";
+		$temp = str_split($cents);
+		$i = count($temp);
+		switch($i){
+			case 0: array_unshift($temp, 0, 0, 0, 0); break;
+			case 1: array_unshift($temp, 0, 0, 0); break;	
+			case 2: array_unshift($temp, 0, 0); break;
+			case 3: array_unshift($temp, 0); break;
 		}
-		else if(strlen($kaki[1]) == 2){
-			$price[1] = $kaki[1];
+		$i = count($temp);
+		$dp = $i -3; 
+		while($i--){
+			if($dp == $i){ $res = self::$decim . $res; }
+			$res = $temp[$i] . $res;
 		}
-	} 
-	else {
-		$price[0] = $temp;
-		$price[1] = "00";
+		return $res;
 	}
-	$res = join($decim, $price); 
-	$res = $res . " " . "€";
-	return $res;
-	*/	
 }
+
+
+
+
+
+
+// ............ 
+
+
 
 function testCentsToPrice($cents)
 {
-	$cents = round($cents, 0);
-	
-	// settings
-	$decim = ",";
-	$curry = "€";
-	// 
-	
-	print centsToPrice($cents, $decim, $curry);
-	print "\n";
+	$res = Fuck::$decim = ",";
+	$res = Fuck::centsToCentsAOneHundredTimesRepr($cents);
+	print $res . PHP_EOL;
 }
 
 testCentsToPrice(40 +2000);
