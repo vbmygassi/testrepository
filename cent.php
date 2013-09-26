@@ -1,15 +1,15 @@
 <?php
 /*
     a wild wild wild attempt to store price values in their "cent" representation
-	to avoid the "EUR 10.00" + "EUR 10,12" p r o b l e m
-	[ excel-crew will never ever get this straight... ]
-	[ "but no, i need the "10,12" representation, but no, i need the "10.23" repr, my computerprogramm will not work without...
+	to avoid the "EUR 10.00" + "EUR 10,12" f u n  
 
 
  						*/
 
 function centsToPrice($cents, $decim, $curry)
 {
+	// $res = substr_replace($cents, $insert, strlen($cents) -2, 0);
+	
 	$res = 0; 
 	$dollars = $cents /100;
 	$dollars = round($dollars, 2);
@@ -32,6 +32,7 @@ function centsToPrice($cents, $decim, $curry)
 	$res = join($decim, $price); 
 	$res = $res . " " . "€";
 	return $res;
+	
 }
 
 function testCentsToPrice($cents)
