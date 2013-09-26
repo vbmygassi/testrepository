@@ -1,7 +1,9 @@
 <?php
 /*
     a wild wild wild attempt to store price values in their "cent" representation
-	to avoid the "EUR 10.00" + "EUR 10,12" f u n  
+	to avoid the "EUR 10.00" + "EUR 10,12" f u n 
+	( wer sich wegen sowas mit seinen Freunden gestritten hat, weiss; was ich meine...
+	( "kannst du mal die so machen das da dort die komma weg ist beim eingeben........ 
  						
 										*/
 class PriceFormat
@@ -31,15 +33,15 @@ class PriceFormat
 	}
 }
 
-// ............ 
+// ................................................... 
 function testCentsToPriceLabel($cents)
 {
 	$res = PriceFormat::$decim = ",";
 	$res = PriceFormat::centsToPriceLabel($cents);
 	print $res . PHP_EOL;
 }
-
-testCentsToPriceLabel(140 +2000);
+// ................................................... 
+testCentsToPriceLabel(29999 +140 +2000);
 testCentsToPriceLabel(20 +12 +4 +200);
 testCentsToPriceLabel(12 +3000 -2 -50000 -120);
 testCentsToPriceLabel(12 +10);
@@ -51,5 +53,4 @@ testCentsToPriceLabel(1 +2);
 testCentsToPriceLabel(1 +2 +0);
 testCentsToPriceLabel(11 +24);
 testCentsToPriceLabel(0);
-
-
+// ................................................... 
