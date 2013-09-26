@@ -8,7 +8,8 @@
 										*/
 class PriceFormat
 { 
-	static public $decim = ".";
+	static public $odecim = ".";
+	static public $idecim = ".";
 	static public function centsToPriceLabel($cents)
 	{
 		// hätte *fast* geklappt	
@@ -26,9 +27,27 @@ class PriceFormat
 		$i = count($temp);
 		$p = $i -3; 
 		while($i--){
-			if($p == $i){ $res = self::$decim . $res; }
+			if($p == $i){ $res = self::$odecim . $res; }
 			$res = $temp[$i] . $res;
 		}
+		return $res;
+	}
+	
+	static public function priceLabelToCents($label)
+	{
+		$res = 0;
+		$temp = explode(self::$idecim, $label);
+		if(1 == count($temp)){
+			$temp[1] = "00";
+		}
+		$temp[0] = preg_replace("/[^0-9]/", "", $temp[0]);
+		$temp[1] = preg_replace("/[^0-9]/", "", $temp[1]);
+		$temp[1] = substr($temp[1], 0, 2);	
+		if(1 == strlen($temp[1])){
+			$temp[1] .= "0";
+		}
+		$res = $temp[0] . $temp[1];
+		$res = intval($res);
 		return $res;
 	}
 }
@@ -36,8 +55,15 @@ class PriceFormat
 // ................................................... 
 function testCentsToPriceLabel($cents)
 {
-	$res = PriceFormat::$decim = ",";
+	$res = PriceFormat::$odecim = ",";
 	$res = PriceFormat::centsToPriceLabel($cents);
+	print $res . PHP_EOL;
+}
+// ................................................... 
+function testPriceLabelToCents($label)
+{
+	$res = PriceFormat::$idecim = ",";
+	$res = PriceFormat::priceLabelToCents($label);
 	print $res . PHP_EOL;
 }
 // ................................................... 
@@ -54,3 +80,14 @@ testCentsToPriceLabel(1 +2 +0);
 testCentsToPriceLabel(11 +24);
 testCentsToPriceLabel(0);
 // ................................................... 
+print "---" . PHP_EOL;
+testPriceLabelToCents(",1");
+testPriceLabelToCents(",19");
+testPriceLabelToCents("0,21");
+testPriceLabelToCents("10,21");
+testPriceLabelToCents("100");
+testPriceLabelToCents("100,2");
+testPriceLabelToCents("100,23");
+testPriceLabelToCents("100,456");
+testPriceLabelToCents("100,09");
+testPriceLabelToCents("109,299,500");
