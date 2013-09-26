@@ -8,8 +8,31 @@
 
 function centsToPrice($cents, $decim, $curry)
 {
-	// $res = substr_replace($cents, $insert, strlen($cents) -2, 0);
+	$temp = str_split($cents);
+	$i = count($temp);
+	switch($i){
+		case 0: array_unshift($temp, 0, 0, 0, 0); break;
+		case 1: array_unshift($temp, 0, 0, 0); break;	
+		case 2: array_unshift($temp, 0, 0); break;
+		case 3: array_unshift($temp, 0); break;
+	}
+	$i = count($temp);
+	$res = "";
+	$d = 0;
+	while($i--){
+		if(2 == $d){
+			$res = $decim . $res;
+		}
+		$res = $temp[$i] . $res;
+		$d++;
+	}
+	$res = $res . " " . $curry;	
 	
+	return $res;
+	
+	// $res = substr_replace($cents, $decim, strlen($cents) -2, 0);
+	
+	/*
 	$res = 0; 
 	$dollars = $cents /100;
 	$dollars = round($dollars, 2);
@@ -32,16 +55,18 @@ function centsToPrice($cents, $decim, $curry)
 	$res = join($decim, $price); 
 	$res = $res . " " . "€";
 	return $res;
-	
+	*/	
 }
 
 function testCentsToPrice($cents)
 {
 	$cents = round($cents, 0);
+	
 	// settings
 	$decim = ",";
 	$curry = "€";
 	// 
+	
 	print centsToPrice($cents, $decim, $curry);
 	print "\n";
 }
