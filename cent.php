@@ -7,12 +7,11 @@
 class PriceFormat
 { 
 	static public $decim = ".";
-	static public function formatCentsToPrice($cents)
+	static public function centsToPriceLabel($cents)
 	{
 		// hätte *fast* geklappt	
 		// return substr_replace($cents, self::$decim, strlen($cents) -2, 0);
 		$res = "";
-		// bruchcente gibt es ab jetzt nicht mehr
 		$cents = round($cents, 0);
 		$temp = str_split($cents);
 		$i = count($temp);
@@ -33,22 +32,24 @@ class PriceFormat
 }
 
 // ............ 
-function testFormatCentsToPrice($cents)
+function testCentsToPriceLabel($cents)
 {
 	$res = PriceFormat::$decim = ",";
-	$res = PriceFormat::formatCentsToPrice($cents);
+	$res = PriceFormat::centsToPriceLabel($cents);
 	print $res . PHP_EOL;
 }
 
-testFormatCentsToPrice(40 +2000);
-testFormatCentsToPrice(20 +12 +4 +200);
-testFormatCentsToPrice(12 +3000 -2 -50000 -120);
-testFormatCentsToPrice(12 +10);
-testFormatCentsToPrice(12.1 +10.11);
-testFormatCentsToPrice(12.1 +10.9999888811);
-testFormatCentsToPrice(12.1 +10.49 -.1 -.1);
-testFormatCentsToPrice(10000 +20000);
-testFormatCentsToPrice(1 +2);
-testFormatCentsToPrice(1 +2 +0);
-testFormatCentsToPrice(11 +24);
+testCentsToPriceLabel(140 +2000);
+testCentsToPriceLabel(20 +12 +4 +200);
+testCentsToPriceLabel(12 +3000 -2 -50000 -120);
+testCentsToPriceLabel(12 +10);
+testCentsToPriceLabel(12.1 +10.11);
+testCentsToPriceLabel(12.1 +10.9999888811);
+testCentsToPriceLabel(12.1 +10.49 -.1 -.1);
+testCentsToPriceLabel(10000 +20000);
+testCentsToPriceLabel(1 +2);
+testCentsToPriceLabel(1 +2 +0);
+testCentsToPriceLabel(11 +24);
+testCentsToPriceLabel(0);
+
 
