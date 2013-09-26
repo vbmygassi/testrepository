@@ -8,6 +8,7 @@
 
 function centsToPrice($cents, $decim, $curry)
 {
+	$res = "";
 	$temp = str_split($cents);
 	$i = count($temp);
 	switch($i){
@@ -17,17 +18,12 @@ function centsToPrice($cents, $decim, $curry)
 		case 3: array_unshift($temp, 0); break;
 	}
 	$i = count($temp);
-	$res = "";
-	$d = 0;
+	$dp = $i -3; 
 	while($i--){
-		if(2 == $d){
-			$res = $decim . $res;
-		}
+		if($dp == $i){ $res = $decim . $res; }
 		$res = $temp[$i] . $res;
-		$d++;
 	}
 	$res = $res . " " . $curry;	
-	
 	return $res;
 	
 	// $res = substr_replace($cents, $decim, strlen($cents) -2, 0);
