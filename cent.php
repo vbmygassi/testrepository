@@ -10,6 +10,7 @@ class PriceFormat
 { 
 	static public $odecim = ".";
 	static public $idecim = ".";
+	
 	static public function centsToPriceLabel($cents)
 	{
 		// hätte *fast* geklappt	
@@ -91,3 +92,4 @@ testPriceLabelToCents("100,23");
 testPriceLabelToCents("100,456");
 testPriceLabelToCents("100,09");
 testPriceLabelToCents("109,299,500");
+testPriceLabelToCents("1a9,2x9,dd00");
