@@ -93,3 +93,12 @@ testPriceLabelToCents("100,456");
 testPriceLabelToCents("100,09");
 testPriceLabelToCents("109,299,500");
 testPriceLabelToCents("1a9,2x9,dd00");
+// 
+testPriceLabelToCents("87.98");
+print <<<EOD
+:: input :: 
+--------------------    ----------
+|              1000|    |      13|
+--------------------  , ----------
+
+EOD;
