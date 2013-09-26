@@ -11,7 +11,7 @@ class PriceFormat
 	static public $odecim = ".";
 	static public $idecim = ".";
 	
-	static public function centsToPriceLabel($cents)
+	static public function centsToPricelabel($cents)
 	{
 		// hätte *fast* geklappt	
 		// return substr_replace($cents, self::$decim, strlen($cents) -2, 0);
@@ -34,7 +34,7 @@ class PriceFormat
 		return $res;
 	}
 	
-	static public function priceLabelToCents($label)
+	static public function pricelabelToCents($label)
 	{
 		$res = 0;
 		$temp = explode(self::$idecim, $label);
@@ -54,47 +54,53 @@ class PriceFormat
 }
 
 // ................................................... 
-function testCentsToPriceLabel($cents)
+function testCentsToPricelabel($cents)
 {
 	$res = PriceFormat::$odecim = ",";
-	$res = PriceFormat::centsToPriceLabel($cents);
+	$res = PriceFormat::centsToPricelabel($cents);
 	print $res . PHP_EOL;
 }
+
 // ................................................... 
-function testPriceLabelToCents($label)
+function testPricelabelToCents($label)
 {
 	$res = PriceFormat::$idecim = ",";
-	$res = PriceFormat::priceLabelToCents($label);
+	$res = PriceFormat::pricelabelToCents($label);
 	print $res . PHP_EOL;
 }
+
 // ................................................... 
-testCentsToPriceLabel(29999 +140 +2000);
-testCentsToPriceLabel(20 +12 +4 +200);
-testCentsToPriceLabel(12 +3000 -2 -50000 -120);
-testCentsToPriceLabel(12 +10);
-testCentsToPriceLabel(12.1 +10.11);
-testCentsToPriceLabel(12.1 +10.9999888811);
-testCentsToPriceLabel(12.1 +10.49 -.1 -.1);
-testCentsToPriceLabel(10000 +20000);
-testCentsToPriceLabel(1 +2);
-testCentsToPriceLabel(1 +2 +0);
-testCentsToPriceLabel(11 +24);
-testCentsToPriceLabel(0);
+testCentsToPricelabel(29999 +140 +2000);
+testCentsToPricelabel(20 +12 +4 +200);
+testCentsToPricelabel(12 +3000 -2 -50000 -120);
+testCentsToPricelabel(12 +10);
+testCentsToPricelabel(12.1 +10.11);
+testCentsToPricelabel(12.1 +10.9999888811);
+testCentsToPricelabel(12.1 +10.49 -.1 -.1);
+testCentsToPricelabel(10000 +20000);
+testCentsToPricelabel(1 +2);
+testCentsToPricelabel(1 +2 +0);
+testCentsToPricelabel(11 +24);
+testCentsToPricelabel(0);
+
 // ................................................... 
 print "---" . PHP_EOL;
-testPriceLabelToCents(",1");
-testPriceLabelToCents(",19");
-testPriceLabelToCents("0,21");
-testPriceLabelToCents("10,21");
-testPriceLabelToCents("100");
-testPriceLabelToCents("100,2");
-testPriceLabelToCents("100,23");
-testPriceLabelToCents("100,456");
-testPriceLabelToCents("100,09");
-testPriceLabelToCents("109,299,500");
-testPriceLabelToCents("1a9,2x9,dd00");
-// 
-testPriceLabelToCents("87.98");
+testPricelabelToCents(",1");
+testPricelabelToCents(",19");
+testPricelabelToCents("0,21");
+testPricelabelToCents("10,21");
+testPricelabelToCents("100");
+testPricelabelToCents("100,2");
+testPricelabelToCents("100,23");
+testPricelabelToCents("100,456");
+testPricelabelToCents("100,09");
+testPricelabelToCents("109,299,500");
+testPricelabelToCents("1a9,2x9,dd00");
+
+// ................................................... 
+testPricelabelToCents("87.98");
+
+// ................................................... 
 print <<<EOD
 :: input :: 
 --------------------    ----------
